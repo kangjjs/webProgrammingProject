@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>hello jsp</h1>
-	
+	<p class="m-0 text-center text-white">Copyright &copy; Travier 2022</p>
 </body>
 </html>
