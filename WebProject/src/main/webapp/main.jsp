@@ -15,6 +15,12 @@
         <link rel="stylesheet" href="./resources/css/styles.css"  />
     </head>
 	<body>
+	<%
+		String userID=null;
+		if(session.getAttribute("userID")!=null){
+			userID=(String)session.getAttribute("userID");
+		}
+	%>
 	
         <!-- Navigation-->	
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -67,7 +73,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><a href="#" class="text-secondary">What is HTML</a></h3>
                         <p class="card-text">HTML stands for Hyper Text Markup Language, It helps to learn web development and designing. </p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                        <a href="#" class="btn btn-primary">보러가기</a>
                     </div>
                 </div>
             </div>
@@ -80,7 +86,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><a href="#" class="text-secondary">Why We Use HTML</a></h3>
                         <p class="card-text">We use HTML to make website and that website helps to gain very much knowledge.Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida.</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                        <a href="#" class="btn btn-primary">보러가기</a>
                     </div>
                 </div>
             </div>
@@ -92,7 +98,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><a href="#" class="text-secondary">Where do people came from?</a></h3>
                         <p class="card-text">Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida. Nam sapien nisi, malesuada at sapien suscipit,</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                        <a href="#" class="btn btn-primary">보러가기</a>
                     </div>
                 </div>
             </div>
@@ -103,7 +109,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><a href="#" class="text-secondary">What is Lorem Ipsum?</a></h3>
                         <p class="card-text">Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida. Nam sapien nisi, malesuada at sapien suscipit.</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                       <a href="#" class="btn btn-primary">보러가기</a>
                     </div>
                 </div>
             </div>
@@ -115,7 +121,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><a href="#" class="text-secondary">Where is my Pasta?</a></h3>
                         <p class="card-text">Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida. Nam sapien nisi, malesuada at sapien suscipit,</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                        <a href="#" class="btn btn-primary">보러가기</a>
                     </div>
                 </div>
             </div>
@@ -128,7 +134,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><a href="#" class="text-secondary">Why is sky blue ?</a></h3>
                         <p class="card-text">Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida. Nam sapien nisi, malesuada at sapien suscipit.</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                        <a href="#" class="btn btn-primary">보러가기</a>
                     </div>
                 </div>
             </div>

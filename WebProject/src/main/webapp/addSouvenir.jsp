@@ -83,6 +83,12 @@
             </div>
          </div>
          <div class="form-group row">
+            <label class="col-sm-2"><fmt:message key="price"/></label>
+            <div class="col-sm-3">
+               <input type="text" id="price" name="price" class="form-control">
+            </div>
+         </div>
+         <div class="form-group row">
             <label class="col-sm-2"><fmt:message key="continent"/></label>
             <div class="col-sm-3">
                <input type="text" name="continent" class="form-control">

@@ -7,6 +7,7 @@ public class Souvenir implements java.io.Serializable{
 	private String Id; 			    //아이디
 	private String name; 			//이름
 	private String author;			//글쓴이
+	private int price;              //가격
 	private String description;		//설명
 	private String continent;       //대륙
 	private String country;			//나라
@@ -19,6 +20,14 @@ public class Souvenir implements java.io.Serializable{
 
 	public void setId(String id) {
 		Id = id;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	public String getName() {

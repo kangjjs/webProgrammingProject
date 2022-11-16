@@ -1,158 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-<html>
+<!doctype html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-<style>
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700);
-@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
-body, html {
-  height: 100%;
-}
-body {
-  font-family: 'Open Sans';
-  font-weight: 100;
-  display: flex;
-  overflow: hidden;
-}
-input {
-  ::-webkit-input-placeholder {
-     color: rgba(255,255,255,0.7);
-  }
-  ::-moz-placeholder {
-     color: rgba(255,255,255,0.7);  
-  }
-  :-ms-input-placeholder {  
-     color: rgba(255,255,255,0.7);  
-  }
-  &:focus {
-    outline: 0 transparent solid;
-    ::-webkit-input-placeholder {
-     color: rgba(0,0,0,0.7);
-    }
-    ::-moz-placeholder {
-       color: rgba(0,0,0,0.7);  
-    }
-    :-ms-input-placeholder {  
-       color: rgba(0,0,0,0.7);  
-    }
-  }
-}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/icomoon/style.css">
+<link rel="stylesheet" href="./resources/css/owl.carousel.min.css">
 
-.login-form {
-  //background: #222;
-  //box-shadow: 0 0 1rem rgba(0,0,0,0.3);
-  min-height: 10rem;
-  margin: auto;
-  max-width: 50%;
-  padding: .5rem;
-}
-.login-text {
-  //background: hsl(40,30,60);
-  //border-bottom: .5rem solid white;
-  color: white;
-  font-size: 1.5rem;
-  margin: 0 auto;
-  max-width: 50%;
-  padding: .5rem;
-  text-align: center;
-  //text-shadow: 1px -1px 0 rgba(0,0,0,0.3);
-  .fa-stack-1x {
-    color: black;
-  }
-}
+<link rel="stylesheet" href="./resources/css/bootstrap.min.css">
 
-.login-username, .login-password {
-  background: transparent;
-  border: 0 solid;
-  border-bottom: 1px solid rgba(white, .5);
-  color: white;
-  display: block;
-  margin: 1rem;
-  padding: .5rem;
-  transition: 250ms background ease-in;
-  width: calc(100% - 3rem);
-  &:focus {
-    background: white;
-    color: black;
-    transition: 250ms background ease-in;
-  }
-}
-
-.login-forgot-pass {
-  //border-bottom: 1px solid white;
-  bottom: 0;
-  color: white;
-  cursor: pointer;
-  display: block;
-  font-size: 75%;
-  left: 0;
-  opacity: 0.6;
-  padding: .5rem;
-  position: absolute;
-  text-align: center;
-  //text-decoration: none;
-  width: 100%;
-  &:hover {
-    opacity: 1;
-  }
-}
-.login-submit {
-  border: 1px solid white;
-  background: transparent;
-  color: white;
-  display: block;
-  margin: 1rem auto;
-  min-width: 1px;
-  padding: .25rem;
-  transition: 250ms background ease-in;
-  &:hover, &:focus {
-    background: white;
-    color: black;
-    transition: 250ms background ease-in;
-  }
-}
-
-[class*=underlay] {
-  left: 0;
-  min-height: 100%;
-  min-width: 100%;
-  position: fixed;
-  top: 0;
-}
-.underlay-photo {
-  animation: hue-rotate 6s infinite;
-  background: url('./resources/images/travel.jpg');
-  background-size: cover;
-  -webkit-filter: grayscale(30%);
-  z-index: -1;
-}
-.underlay-black {
-  background: rgba(0,0,0,0.7);
-  z-index: -1;
-}
-
-@keyframes hue-rotate {
-  from {
-    -webkit-filter: grayscale(30%) hue-rotate(0deg);
-  }
-  to {
-    -webkit-filter: grayscale(30%) hue-rotate(360deg);
-  }
-}
-</style>
-</head>
+<link rel="stylesheet" href="./resources/css/login.css">
+<title>Login #2</title>
+<script nonce="db9662b3-fd51-4be9-bd14-04ec6f04247f">(function(w,d){!function(e,f,g,h){e.zarazData=e.zarazData||{};e.zarazData.executed=[];e.zaraz={deferred:[],listeners:[]};e.zaraz.q=[];e.zaraz._f=function(i){return function(){var j=Array.prototype.slice.call(arguments);e.zaraz.q.push({m:i,a:j})}};for(const k of["track","set","debug"])e.zaraz[k]=e.zaraz._f(k);e.zaraz.init=()=>{var l=f.getElementsByTagName(h)[0],m=f.createElement(h),n=f.getElementsByTagName("title")[0];n&&(e.zarazData.t=f.getElementsByTagName("title")[0].text);e.zarazData.x=Math.random();e.zarazData.w=e.screen.width;e.zarazData.h=e.screen.height;e.zarazData.j=e.innerHeight;e.zarazData.e=e.innerWidth;e.zarazData.l=e.location.href;e.zarazData.r=f.referrer;e.zarazData.k=e.screen.colorDepth;e.zarazData.n=f.characterSet;e.zarazData.o=(new Date).getTimezoneOffset();if(e.dataLayer)for(const r of Object.entries(Object.entries(dataLayer).reduce(((s,t)=>({...s[1],...t[1]})))))zaraz.set(r[0],r[1],{scope:"page"});e.zarazData.q=[];for(;e.zaraz.q.length;){const u=e.zaraz.q.shift();e.zarazData.q.push(u)}m.defer=!0;for(const v of[localStorage,sessionStorage])Object.keys(v||{}).filter((x=>x.startsWith("_zaraz_"))).forEach((w=>{try{e.zarazData["z_"+w.slice(7)]=JSON.parse(v.getItem(w))}catch{e.zarazData["z_"+w.slice(7)]=v.getItem(w)}}));m.referrerPolicy="origin";m.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(e.zarazData)));l.parentNode.insertBefore(m,l)};["complete","interactive"].includes(f.readyState)?zaraz.init():e.addEventListener("DOMContentLoaded",zaraz.init)}(w,d,0,"script");})(window,document);</script></head>
 <body>
-<form class="login-form">
-  <input type="Id" class="login-username" autofocus="true" required="true" placeholder="아이디" />
-  <input type="password" class="login-password" required="true" placeholder="비밀번호" />
-  <input type="submit" name="Login" value="Login" class="login-submit" />
+<div class="d-lg-flex half">
+<div class="bg order-1 order-md-2" style="background-image: url('./resources/images/bg_1.jpg');"></div>
+<div class="contents order-2 order-md-1">
+<div class="container">
+<div class="row align-items-center justify-content-center">
+<div class="col-md-7">
+<h3> 당신의 여행을 보여주세요 <strong>Travier</strong></h3>
+<p class="mb-4">여행을 통해서 얻은 정보와 여행에서 가져온 기념품을 판매</p>
+<form action="#" method="post">
+<div class="form-group first">
+<input type="text" class="form-control" placeholder="아이디" id="username">
+</div>
+<div class="form-group last mb-3">
+<input type="password" class="form-control" placeholder="비밀번호" id="password">
+</div>
+<div class="d-flex mb-5 align-items-center">
+<span class="ml-auto"><a href="signup.jsp" class="forgot-pass">회원가입</a></span>
+</div>
+<input type="submit" value="로그인" class="btn btn-block btn-primary">
 </form>
-<div class="underlay-photo"></div>
-<div class="underlay-black"></div> 
-<!--Inspiration from: http://ertekinn.com/loginsignup/-->
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="./resources/js/jquery-3.3.1.min.js"></script>
+<script src="./resources/js/popper.min.js"></script>
+<script src="./resources/js/bootstrap.min.js"></script>
+<script src="./resources/js/main.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon='{"rayId":"76a07765bb367c59","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.11.0","si":100}' crossorigin="anonymous"></script>
 </body>
 </html>
