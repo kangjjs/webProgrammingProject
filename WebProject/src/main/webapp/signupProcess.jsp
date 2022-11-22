@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="dto.User"%>
 <%@ page import="dao.UserRepository"%>
 <%@ page import="java.io.PrintWriter" %>
@@ -11,18 +11,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <%
 	request.setCharacterEncoding("UTF-8");
+
+	String userID=request.getParameter("userID");
+	String userPassword=request.getParameter("userPassword");
+	String name=request.getParameter("name");
+	String address=request.getParameter("address");
 	
-	if(user.getUserID().equals("") || user.getUserPassword().equals("") 
-			|| user.getName().equals("")|| user.getAddress().equals("")){
+	if(userID.equals("") || userPassword.equals("") 
+			|| name.equals("")|| address.equals("")){
 		PrintWriter script=response.getWriter();
 		script.println("<script>");
-		script.println("alert('ÀÔ·ÂÀÌ ¾ÈµÈ »çÇ×ÀÌ ÀÖ½À´Ï´Ù.');");
+		script.println("alert('ì…ë ¥ì´ ì•ˆëœ ì‚¬í•­ì´ ìˆìŠµë‹ˆë‹¤.');");
 		script.println("history.back();");
 		script.println("</script>");
 	}else {
@@ -32,13 +37,13 @@
 		if(result== -1){
 			PrintWriter script=response.getWriter();
 			script.println("<script>");
-			script.println("alert('ÀÌ¹Ì Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.');");
+			script.println("alert('ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.');");
 			script.println("location.href='login.jsp';");
 			script.println("</script>");
 		}else{
 			PrintWriter script=response.getWriter();
 			script.println("<script>");
-			script.println("alert('È¸¿ø°¡ÀÔ¼º°ø');");
+			script.println("alert('íšŒì›ê°€ì…ì„±ê³µ');");
 			script.println("location.href='login.jsp';");
 			script.println("</script>");
 		}

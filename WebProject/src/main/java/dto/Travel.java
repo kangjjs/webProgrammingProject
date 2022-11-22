@@ -1,10 +1,8 @@
 package dto;
 
-public class Travel implements java.io.Serializable{
+public class Travel{
 	
-	private static final long serialVersionUID = -4274700572038677000L;
-	
-	private String Id; 			    //아이디
+	private String userID; 			    //아이디
 	private String title; 			//제목
 	private String author;			//글쓴이
 	private String description;		//설명
@@ -13,19 +11,14 @@ public class Travel implements java.io.Serializable{
 	private String destination;	    //여행지
 	private String startDate;		//시작날짜
 	private String endDate;		    //끝난날짜
-	private String filename;
 	
-	public Travel() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	public String getId() {
-		return Id;
+	public String getUserID() {
+		return userID;
 	}
 
-	public void setId(String id) {
-		Id = id;
+	public void setUserID(String userID) {
+		this.userID = userID;
 	}
 
 	public String getTitle() {
@@ -91,14 +84,5 @@ public class Travel implements java.io.Serializable{
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-
-	public String getFilename() {
-		return filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-	
 	
 }

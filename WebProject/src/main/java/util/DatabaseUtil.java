@@ -11,6 +11,7 @@ public class DatabaseUtil {
 			String dbID="root";
 			String dbPassword="1234";
 			Class.forName("com.mysql.jdbc.Driver");
+			
 			return DriverManager.getConnection(dbURL,dbID,dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace(); 

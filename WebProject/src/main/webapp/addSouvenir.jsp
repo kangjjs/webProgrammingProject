@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="dto.Travel" %>
+<%@ page import="dto.Souvenir" %>
+<%@ page import="util.DatabaseUtil" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html>
 <head>
         <meta charset="utf-8" />
@@ -17,8 +21,39 @@
         <link rel="stylesheet" href="./resources/css/styles.css"  />
         <link rel="stylesheet"
    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="./resources/js/jquery-3.3.1.min.js"></script>
+<script src="./resources/js/popper.min.js"></script>
+<script src="./resources/js/bootstrap.min.js"></script>
+<script src="./resources/js/main.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon='{"rayId":"76a07765bb367c59","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.11.0","si":100}' crossorigin="anonymous"></script>
+   
+ 	<script type="text/javascript">
+ 		function PostSouvenir(){
+ 			var form=document.souvenirs;
+ 			form.submit();
+ 		}
+ 	</script>
+   
     </head>
 	<body>
+		<%
+			
+			String userID=null;
+			String name=null;
+			if(session.getAttribute("userID")!=null){
+			userID=(String)session.getAttribute("userID");
+			Connection conn =DatabaseUtil.getConnection();
+			String sql ="select * from user where userID=?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,userID);
+			ResultSet rs=pstmt.executeQuery();
+			rs.next();
+			name=rs.getString("name");
+			
+			}
+			%>
+	
         <!-- Navigation-->	
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
@@ -26,25 +61,44 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
+                    	<%if(userID==null){ %>
+                        <%}else{ %>
+                        <li class="nav-item"><a class="nav-link" href="#!"><%=name%>의 여행기록</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">상점</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                                <li><a class="dropdown-item" href="allProducts.jsp">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Africa</a></li>
-                                <li><a class="dropdown-item" href="#!">America</a></li>
-                                <li><a class="dropdown-item" href="#!">Asia</a></li>
-                                <li><a class="dropdown-item" href="#!">Europe</a></li>
-                                <li><a class="dropdown-item" href="#!">Oceania</a></li>
+                                <li><a class="dropdown-item" href="africa.jsp">Africa</a></li>
+                                <li><a class="dropdown-item" href="america.jsp">America</a></li>
+                                <li><a class="dropdown-item" href="asia.jsp">Asia</a></li>
+                                <li><a class="dropdown-item" href="europe.jsp">Europe</a></li>
+                                <li><a class="dropdown-item" href="oceania.jsp">Oceania</a></li>
                             </ul>
                         </li>
+                        <%} %>
                     </ul>
+                    
+					
+                    <%
+                    	if(userID==null){
+                    %>
                     <form class="d-flex">
                         <a href="login.jsp" style="color:black; text-decoration:none;">
-                           Login
+                           Login	
                         </a>
                     </form>
+                    <%
+                    	}else{
+                    %>
+                    <form class="d-flex">
+                        <a href="logoutProcess.jsp" style="color:black; text-decoration:none;">
+                           Logout
+                        </a>
+                    </form>
+                    <%
+                    }
+                    %>
                 </div>
             </div>
         </nav>
@@ -54,7 +108,7 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">기념품을 등록해주세요</h1>
+                    <h1 class="display-4 fw-bolder">나의 여행을 기록해주세요</h1>
                 </div>
             </div>
         </header>
@@ -62,30 +116,11 @@
          <div class="text-right">
             <a href="?language=ko">Korean</a> | <a href="?language=en">English</a>
          </div>
-      <form name="addBook" action="./processAddBook.jsp" class="form-horizontal" method="post"
-      enctype="multipart/form-data">
-         <div class="form-group row">
-            <label class="col-sm-2"><fmt:message key="Id"/></label>
-            <div class="col-sm-3">
-               <input type="text" id = "Id" name="Id" class="form-control">
-            </div>
-         </div>
+      <form name="souvenirs" action="./addSouvenirProcess.jsp" class="form-horizontal" method="post" enctype="multipart/form-data">
          <div class="form-group row">
             <label class="col-sm-2"><fmt:message key="name"/></label>
             <div class="col-sm-3">
-               <input type="text" id="name" name="name" class="form-control">
-            </div>
-         </div>
-         <div class="form-group row">
-            <label class="col-sm-2"><fmt:message key="author"/></label>
-            <div class="col-sm-3">
-               <input type="text" name="author" class="form-control">
-            </div>
-         </div>
-         <div class="form-group row">
-            <label class="col-sm-2"><fmt:message key="price"/></label>
-            <div class="col-sm-3">
-               <input type="text" id="price" name="price" class="form-control">
+               <input type="text" name="name" class="form-control">
             </div>
          </div>
          <div class="form-group row">
@@ -114,14 +149,20 @@
             </div>
          </div>
          <div class="form-group row">
-            <label class="col-sm-2"><fmt:message key="Image"/></label>
+            <label class="col-sm-2"><fmt:message key="price"/></label>
             <div class="col-sm-3">
-               <input type="file" name="filename" class="form-control">
-             </div>
+               <input type="text" name="price" class="form-control">
+            </div>
          </div>
+       	 <div class="form-group row">
+            <div class="col-sm-3">
+               <input type="file" name="file" class="form-control">
+            </div>
+         </div>
+         
          <div class="form-group row">
             <div class="col-sm-offset-2 col-sm-10">
-               <input type="button" class="btn btn-primary" value='<fmt:message key="button" />' onclick="checkAddBook()">
+               <input type="button" value="작성하기" class="btn btn-primary" onclick="PostSouvenir()">
             </div>
          </div>
       </form>

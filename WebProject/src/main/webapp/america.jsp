@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ page import="util.DatabaseUtil" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
+
 <!DOCTYPE html>
 <head>
         <meta charset="utf-8" />
@@ -15,14 +20,31 @@
         <link rel="stylesheet" href="./resources/css/styles.css"  />
     </head>
 	<body>
-        <!-- Navigation-->
+	<%
+			
+			String userID=null;
+			String name=null;
+			if(session.getAttribute("userID")!=null){
+			userID=(String)session.getAttribute("userID");
+			Connection conn =DatabaseUtil.getConnection();
+			String sql ="select * from user where userID=?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,userID);
+			ResultSet rs=pstmt.executeQuery();
+			rs.next();
+			name=rs.getString("name");
+			
+			}
+			%>
+        <!-- Navigation-->	
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
                 <a href="main.jsp"class="navbar-brand" href="#!">Travier</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!"><%=name%>의 여행기록</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">상점</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -36,23 +58,43 @@
                             </ul>
                         </li>
                     </ul>
+                    
+					
+                    <%
+                    	if(userID==null){
+                    %>
                     <form class="d-flex">
                         <a href="login.jsp" style="color:black; text-decoration:none;">
                            Login
                         </a>
                     </form>
+                    <%
+                    	}else{
+                    %>
+                    
+                    <form class="d-flex">
+                        <a href="logoutProcess.jsp" style="color:black; text-decoration:none;">
+                           Logout
+                        </a>
+                    </form>
+                    <%
+                    }
+                    %>
                 </div>
             </div>
         </nav>
         <!-- Header-->
         <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
+            <div class="text-center text-white">
+                	<% if(userID==null){ %>	
+                	<h1 class="display-4 fw-bolder">갖고싶은 기념품을 둘러봐요</h1>
+                    <br>
+                    <% }else{ %>
                     <h1 class="display-4 fw-bolder">기념품 등록하기</h1>
                     <br>
-                    <a href="addTravel.jsp" class="btn btn-primary btn-lg">등록하기</a>
+                    <a href="addSouvenir.jsp" class="btn btn-primary btn-lg">등록하기</a>
+                    <%} %>
                 </div>
-            </div>
         </header>
         
         <!-- Section-->

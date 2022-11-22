@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <head>
 
@@ -23,12 +24,19 @@
 <div class="col-md-7">
 <h3> 당신의 여행을 보여주세요 <strong>Travier</strong></h3>
 <p class="mb-4">여행을 통해서 얻은 정보와 여행에서 가져온 기념품을 판매</p>
-<form action="#" method="post">
+<fmt:setLocale value='<%=request.getParameter("language") %>'/>
+<fmt:bundle basename="bundle.login" >
+<form name="login" action="./loginProcess.jsp" method="post">
+<div class="text-right">
+     <a href="?language=ko">Korean</a> | <a href="?language=en">English</a>
+</div>
 <div class="form-group first">
-<input type="text" class="form-control" placeholder="아이디" id="username">
+<label class="col-sm-2"><fmt:message key="userID"/></label>
+<input type="text" class="form-control" id="userID" name="userID">
 </div>
 <div class="form-group last mb-3">
-<input type="password" class="form-control" placeholder="비밀번호" id="password">
+<label class="col-sm-2"><fmt:message key="userPassword"/></label>
+<input type="password" class="form-control" id="userPassword" name="userPassword" >
 </div>
 <div class="d-flex mb-5 align-items-center">
 <span class="ml-auto"><a href="signup.jsp" class="forgot-pass">회원가입</a></span>
@@ -40,6 +48,7 @@
 </div>
 </div>
 </div>
+</fmt:bundle>
 <script src="./resources/js/jquery-3.3.1.min.js"></script>
 <script src="./resources/js/popper.min.js"></script>
 <script src="./resources/js/bootstrap.min.js"></script>
