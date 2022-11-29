@@ -23,5 +23,5 @@ travel+souvenir의 합성어 여행을 가서 여행에 대한 글을 쓰며 기
 7. 기념품을 올리고싶다면 작성하기를 클릭 해서 기념품 등록
 
 :star: 참고 링크
-+ [Bootstrap 공식사이트]<https://getbootstrap.com>
-+ [Bootstrap 오픈소스 사이트]<https://startbootstrap.com>
++ [Bootstrap 공식사이트](https://getbootstrap.com)
++ [Bootstrap 오픈소스 사이트](https://startbootstrap.com)
