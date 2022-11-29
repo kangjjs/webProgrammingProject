@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page errorPage="isErrorPage_error.jsp"%>
 <!doctype html>
 <head>
 
@@ -22,8 +23,8 @@
 <div class="container">
 <div class="row align-items-center justify-content-center">
 <div class="col-md-7">
-<h3> ´ç½ÅÀÇ ¿©ÇàÀ» º¸¿©ÁÖ¼¼¿ä <strong>Travier</strong></h3>
-<p class="mb-4">¿©ÇàÀ» ÅëÇØ¼­ ¾òÀº Á¤º¸¿Í ¿©Çà¿¡¼­ °¡Á®¿Â ±â³äÇ°À» ÆÇ¸Å</p>
+<h3> ë‹¹ì‹ ì˜ ì—¬í–‰ì„ ë³´ì—¬ì£¼ì„¸ìš” <strong>Travier</strong></h3>
+<p class="mb-4">ì—¬í–‰ì„ í†µí•´ì„œ ì–»ì€ ì •ë³´ì™€ ì—¬í–‰ì—ì„œ ê°€ì ¸ì˜¨ ê¸°ë…í’ˆì„ íŒë§¤</p>
 <fmt:setLocale value='<%=request.getParameter("language") %>'/>
 <fmt:bundle basename="bundle.login" >
 <form name="login" action="./loginProcess.jsp" method="post">
@@ -39,9 +40,9 @@
 <input type="password" class="form-control" id="userPassword" name="userPassword" >
 </div>
 <div class="d-flex mb-5 align-items-center">
-<span class="ml-auto"><a href="signup.jsp" class="forgot-pass">È¸¿ø°¡ÀÔ</a></span>
+<span class="ml-auto"><a href="signup.jsp" class="forgot-pass">íšŒì›ê°€ìž…</a></span>
 </div>
-<input type="submit" value="·Î±×ÀÎ" class="btn btn-block btn-primary">
+<input type="submit" value="ë¡œê·¸ì¸" class="btn btn-block btn-primary">
 </form>
 </div>
 </div>

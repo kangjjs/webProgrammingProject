@@ -1,9 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="util.DatabaseUtil"%>
 <%@ page import="java.sql.Connection"%>
 <%@ page import="java.sql.PreparedStatement"%>
 <%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dto.Souvenir" %>
+<%@ page errorPage="isErrorPage_error.jsp"%>
 
 <!DOCTYPE html>
 <head>
@@ -20,6 +23,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link rel="stylesheet" href="./resources/css/styles.css" />
+
 </head>
 <body>
 	<%
@@ -27,7 +31,7 @@
 			String userID=null;
 			String name=null;
 			int subPrice=0;
-			String filename=null;
+			ArrayList<Souvenir> list=new ArrayList<>();
 			
 			if(session.getAttribute("userID")!=null){
 				userID=(String)session.getAttribute("userID");
@@ -44,15 +48,35 @@
 			if(session.getAttribute("userID")!=null){
 				userID=(String)session.getAttribute("userID");
 				Connection conn =DatabaseUtil.getConnection();
-				String sql ="select * from souvenir where userID=?";
+				String sql ="select * from souvenir";
 				
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1,userID);
 				ResultSet rs=pstmt.executeQuery();
-				rs.next();
-				name=rs.getString("name");
-				subPrice=rs.getInt("price");
-				filename=rs.getString("filename");
+				while(rs.next()){
+					String id = rs.getString("userID");
+	                String subname = rs.getString("name");
+	                String author = rs.getString("author");
+	                int price = rs.getInt("price");
+	                String continent = rs.getString("continent");
+	                String country = rs.getString("country");
+	                String destination = rs.getString("destination");
+	                String description = rs.getString("description");
+	                String filename = rs.getString("filename");
+	                
+	                Souvenir souvenir = new Souvenir();
+	        
+	                souvenir.setUserID(userID);
+	                souvenir.setName(subname);
+	                souvenir.setAuthor(author);
+	                souvenir.setPrice(price);
+	                souvenir.setContinent(continent);
+	                souvenir.setCountry(country);
+	                souvenir.setDestination(destination);
+	                souvenir.setDescription(description);
+	                souvenir.setFileName(filename);
+	                
+	                list.add(souvenir);
+				}
 			}
 	%>
 	<!-- Navigation-->
@@ -67,20 +91,15 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-					<li class="nav-item"><a class="nav-link" href="#!"><%=name%>¿«
-							ø©«‡±‚∑œ</a></li>
+					<li class="nav-item"><a class="nav-link" href="./mypage.jsp"><%=name%>Ïùò
+							Ïó¨ÌñâÍ∏∞Î°ù</a></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false">ªÛ¡°</a>
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">ÏÉÅÏ†ê</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="allProducts.jsp">All
-									Products</a></li>
+							<li><a class="dropdown-item" href="allProducts.jsp">All products</a></li>
 							<li><hr class="dropdown-divider" /></li>
-							<li><a class="dropdown-item" href="africa.jsp">Africa</a></li>
-							<li><a class="dropdown-item" href="america.jsp">America</a></li>
-							<li><a class="dropdown-item" href="asia.jsp">Asia</a></li>
-							<li><a class="dropdown-item" href="europe.jsp">Europe</a></li>
-							<li><a class="dropdown-item" href="oceania.jsp">Oceania</a></li>
+                                <li><a class="dropdown-item" href="./mysouvenir.jsp">ÎÇ¥ Í∏∞ÎÖêÌíà</a></li>
 						</ul></li>
 				</ul>
 
@@ -110,11 +129,11 @@
 	<header class="bg-dark py-5">
 		<div class="text-center text-white">
 			<% if(userID==null){ %>
-			<h1 class="display-4 fw-bolder">∞Æ∞ÌΩÕ¿∫ ±‚≥‰«∞¿ª µ—∑Ø∫¡ø‰</h1>
+			<h1 class="display-4 fw-bolder">Í∞ñÍ≥†Ïã∂ÏùÄ Í∏∞ÎÖêÌíàÏùÑ ÎëòÎü¨Î¥êÏöî</h1>
 			<br>
 			<% }else{ %>
-			<h1 class="display-4 fw-bolder">±‚≥‰«∞ µÓ∑œ«œ±‚</h1>
-			<br> <a href="addSouvenir.jsp" class="btn btn-primary btn-lg">µÓ∑œ«œ±‚</a>
+			<h1 class="display-4 fw-bolder">Í∏∞ÎÖêÌíà Îì±Î°ùÌïòÍ∏∞</h1>
+			<br> <a href="addSouvenir.jsp" class="btn btn-primary btn-lg">Îì±Î°ùÌïòÍ∏∞</a>
 			<%} %>
 		</div>
 	</header>
@@ -124,236 +143,31 @@
 		<div class="container px-4 px-lg-5 mt-5">
 			<div
 				class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				<% for(int i=0;i<list.size();i++){ %>
 				<div class="col mb-5">
 					<div class="card h-100">
 						<!-- Product image-->
-						<img class="card-img-top"
-							src="./resources/images/<%=filename %>" alt="..." />
+						<img class="card-img-top" 
+							src="./resources/images/<%=list.get(i).getFileName()%>" alt="..." 
+							style="width:100%; height:100%"/>
 						<!-- Product details-->
 						<div class="card-body p-4">
 							<div class="text-center">
 								<!-- Product name-->
-								<h5 class="fw-bolder"><%=name %></h5>
+								<h5 class="fw-bolder"><%=list.get(i).getName()%></h5>
 								<!-- Product price-->
-								<%=subPrice %>
+								<%=list.get(i).getPrice() %>
 							</div>
 						</div>
 						<!-- Product actions-->
 						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="#">View
-									options</a>
+							<a href="./product.jsp?filename=<%=list.get(i).getFileName() %>"  class="btn btn-outline-dark mt-auto" >Îçî Î≥¥Í∏∞</a>								
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col mb-5">
-					<div class="card h-100">
-						<!-- Sale badge-->
-						<div class="badge bg-dark text-white position-absolute"
-							style="top: 0.5rem; right: 0.5rem">Sale</div>
-						<!-- Product image-->
-						<img class="card-img-top"
-							src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						<!-- Product details-->
-						<div class="card-body p-4">
-							<div class="text-center">
-								<!-- Product name-->
-								<h5 class="fw-bolder">Special Item</h5>
-								<!-- Product reviews-->
-								<div
-									class="d-flex justify-content-center small text-warning mb-2">
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-								</div>
-								<!-- Product price-->
-								<span class="text-muted text-decoration-line-through">$20.00</span>
-								$18.00
-							</div>
-						</div>
-						<!-- Product actions-->
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col mb-5">
-					<div class="card h-100">
-						<!-- Sale badge-->
-						<div class="badge bg-dark text-white position-absolute"
-							style="top: 0.5rem; right: 0.5rem">Sale</div>
-						<!-- Product image-->
-						<img class="card-img-top"
-							src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						<!-- Product details-->
-						<div class="card-body p-4">
-							<div class="text-center">
-								<!-- Product name-->
-								<h5 class="fw-bolder">Sale Item</h5>
-								<!-- Product price-->
-								<span class="text-muted text-decoration-line-through">$50.00</span>
-								$25.00
-							</div>
-						</div>
-						<!-- Product actions-->
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col mb-5">
-					<div class="card h-100">
-						<!-- Product image-->
-						<img class="card-img-top"
-							src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						<!-- Product details-->
-						<div class="card-body p-4">
-							<div class="text-center">
-								<!-- Product name-->
-								<h5 class="fw-bolder">Popular Item</h5>
-								<!-- Product reviews-->
-								<div
-									class="d-flex justify-content-center small text-warning mb-2">
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-								</div>
-								<!-- Product price-->
-								$40.00
-							</div>
-						</div>
-						<!-- Product actions-->
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col mb-5">
-					<div class="card h-100">
-						<!-- Sale badge-->
-						<div class="badge bg-dark text-white position-absolute"
-							style="top: 0.5rem; right: 0.5rem">Sale</div>
-						<!-- Product image-->
-						<img class="card-img-top"
-							src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						<!-- Product details-->
-						<div class="card-body p-4">
-							<div class="text-center">
-								<!-- Product name-->
-								<h5 class="fw-bolder">Sale Item</h5>
-								<!-- Product price-->
-								<span class="text-muted text-decoration-line-through">$50.00</span>
-								$25.00
-							</div>
-						</div>
-						<!-- Product actions-->
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col mb-5">
-					<div class="card h-100">
-						<!-- Product image-->
-						<img class="card-img-top"
-							src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						<!-- Product details-->
-						<div class="card-body p-4">
-							<div class="text-center">
-								<!-- Product name-->
-								<h5 class="fw-bolder">Fancy Product</h5>
-								<!-- Product price-->
-								$120.00 - $280.00
-							</div>
-						</div>
-						<!-- Product actions-->
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="#">View
-									options</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col mb-5">
-					<div class="card h-100">
-						<!-- Sale badge-->
-						<div class="badge bg-dark text-white position-absolute"
-							style="top: 0.5rem; right: 0.5rem">Sale</div>
-						<!-- Product image-->
-						<img class="card-img-top"
-							src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						<!-- Product details-->
-						<div class="card-body p-4">
-							<div class="text-center">
-								<!-- Product name-->
-								<h5 class="fw-bolder">Special Item</h5>
-								<!-- Product reviews-->
-								<div
-									class="d-flex justify-content-center small text-warning mb-2">
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-								</div>
-								<!-- Product price-->
-								<span class="text-muted text-decoration-line-through">$20.00</span>
-								$18.00
-							</div>
-						</div>
-						<!-- Product actions-->
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col mb-5">
-					<div class="card h-100">
-						<!-- Product image-->
-						<img class="card-img-top"
-							src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						<!-- Product details-->
-						<div class="card-body p-4">
-							<div class="text-center">
-								<!-- Product name-->
-								<h5 class="fw-bolder">Popular Item</h5>
-								<!-- Product reviews-->
-								<div
-									class="d-flex justify-content-center small text-warning mb-2">
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-									<div class="bi-star-fill"></div>
-								</div>
-								<!-- Product price-->
-								$40.00
-							</div>
-						</div>
-						<!-- Product actions-->
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a>
-							</div>
-						</div>
-					</div>
-				</div>
+				<%} %>
 			</div>
 		</div>
 	</section>

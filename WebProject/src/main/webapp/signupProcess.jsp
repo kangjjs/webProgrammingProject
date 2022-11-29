@@ -8,6 +8,7 @@
 <jsp:setProperty name="user" property="userPassword"/>
 <jsp:setProperty name="user" property="name"/>
 <jsp:setProperty name="user" property="address"/>
+<%@ page errorPage="isErrorPage_error.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>

@@ -11,7 +11,7 @@ public class Travel{
 	private String destination;	    //여행지
 	private String startDate;		//시작날짜
 	private String endDate;		    //끝난날짜
-	
+	private String fileName;
 
 	public String getUserID() {
 		return userID;
@@ -84,5 +84,12 @@ public class Travel{
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 }

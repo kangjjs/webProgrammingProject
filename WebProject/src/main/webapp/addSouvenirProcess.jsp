@@ -10,10 +10,12 @@
 <%@ page import="java.io.File" %>	
 <%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
 <%@ page import="com.oreilly.servlet.MultipartRequest" %>
+<%@ page errorPage="isErrorPage_error.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8" />
 <title>Insert title here</title>
 </head>
 <body>

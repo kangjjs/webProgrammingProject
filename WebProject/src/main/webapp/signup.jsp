@@ -17,7 +17,20 @@
 <script src="./resources/js/bootstrap.min.js"></script>
 <script src="./resources/js/main.js"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon='{"rayId":"76a07765bb367c59","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.11.0","si":100}' crossorigin="anonymous"></script>
-<script type = "text/javascript" src="./resources/js/signup.js"></script>
+<script>
+function checkSignUp() {
+   var userID = document.getElementById("userID");
+   
+   //상품 아이디 체크
+   if (userID==""){
+	  alert("입력해주세요");
+	  form.userID.focus();	  
+      return false;
+   }
+   
+   document.signup.submit();
+}
+</script>
 </head>
 
 <body>
@@ -51,7 +64,7 @@
 <label class="col-sm-2"><fmt:message key="userPassword"/></label>
 <input type="password" class="form-control" id="userPassword" name="userPassword">
 </div>
-<input type="button" value="회원가입" class="btn btn-block btn-primary" onclick="checkSignUp()">
+<button class="btn btn-block btn-primary" onclick="checkSignUp(); return false;">회원가입</button>
 </fmt:bundle>
 </form>
 </div>

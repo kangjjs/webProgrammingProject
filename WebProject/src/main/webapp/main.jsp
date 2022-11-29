@@ -1,9 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="util.DatabaseUtil" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="dto.Travel" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page errorPage="isErrorPage_error.jsp"%>
 <!DOCTYPE html>
 <head>
         <meta charset="utf-8" />
@@ -35,6 +38,39 @@
 			name=rs.getString("name");
 
 			}
+			
+			ArrayList<Travel> travels =new ArrayList<>();
+			Connection conn =DatabaseUtil.getConnection();
+			String travelSql ="select * from travel";
+				
+			PreparedStatement pstmt = conn.prepareStatement(travelSql);
+			ResultSet rs=pstmt.executeQuery();
+			while(rs.next()){
+				String id = rs.getString("userID");
+	            String title = rs.getString("title");
+	            String author = rs.getString("author");
+	            String continent = rs.getString("continent");
+	            String country = rs.getString("country");
+	            String destination = rs.getString("destination");
+	            String description = rs.getString("description");
+	            String startDate = rs.getString("startDate");
+	            String endDate = rs.getString("endDate");
+	            String filename = rs.getString("filename");
+	                
+	        	Travel travel = new Travel();
+	        	travel.setUserID(id);
+	        	travel.setTitle(title);
+	        	travel.setAuthor(author);
+	        	travel.setContinent(continent);
+	        	travel.setCountry(country);
+	        	travel.setDestination(destination);
+	        	travel.setDescription(description);
+	        	travel.setStartDate(startDate);
+	        	travel.setEndDate(endDate);
+	        	travel.setFileName(filename);
+	       
+	        	travels.add(travel);
+			}
 			%>
 			
 			
@@ -47,17 +83,13 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     	<%if(userID==null){ %>
                         <%}else{ %>
-                        <li class="nav-item"><a class="nav-link" href="#!"><%=name%>¿« ø©«‡±‚∑œ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./mypage.jsp"><%=name%>Ïùò Ïó¨ÌñâÍ∏∞Î°ù</a></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">ªÛ¡°</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">ÏÉÅÏ†ê</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="allProducts.jsp">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="africa.jsp">Africa</a></li>
-                                <li><a class="dropdown-item" href="america.jsp">America</a></li>
-                                <li><a class="dropdown-item" href="asia.jsp">Asia</a></li>
-                                <li><a class="dropdown-item" href="europe.jsp">Europe</a></li>
-                                <li><a class="dropdown-item" href="oceania.jsp">Oceania</a></li>
+                                <li><a class="dropdown-item" href="./mysouvenir.jsp">ÎÇ¥ Í∏∞ÎÖêÌíà</a></li>
                             </ul>
                         </li>
                         <%} %>
@@ -92,95 +124,37 @@
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                 	<% if(userID==null){ %>
-                    <h1 class="display-4 fw-bolder">≥™∏∏¿« ø©«‡¿ª ¿˚æÓ¡÷ººø‰</h1>
+                    <h1 class="display-4 fw-bolder">ÎÇòÎßåÏùò Ïó¨ÌñâÏùÑ Ï†ÅÏñ¥Ï£ºÏÑ∏Ïöî</h1>
                     <% }else{ %>
-                    <h1 class="display-4 fw-bolder">≥™¿« ø©«‡ ±€æ≤∑Ø∞°±‚</h1>
+                    <h1 class="display-4 fw-bolder">ÎÇòÏùò Ïó¨Ìñâ Í∏ÄÏì∞Îü¨Í∞ÄÍ∏∞</h1>
                     <br>
-                    <a href="addTravel.jsp" class="btn btn-primary btn-lg">¿€º∫«œ±‚</a>
+                    <a href="addTravel.jsp" class="btn btn-primary btn-lg">ÏûëÏÑ±ÌïòÍ∏∞</a>
                     <% } %>
                 </div>
             </div>
         </header>
-        
     <div class="container">
         <div class="row">
 
+			<%
+				for(int i=0;i<travels.size();i++){
+			%>
             <div class="col-md-6 col-lg-4">
                 <div class="card my-3">
 
-                    <img src="https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg" class="card-image-top" alt="thumbnail">
-
+                    <img src="./resources/images/<%=travels.get(i).getFileName() %>" style="wdith:100%; height:100%;" class="card-image-top" alt="...">
                     <div class="card-body">
-                        <h3 class="card-title"><a href="#" class="text-secondary">What is HTML</a></h3>
-                        <p class="card-text">HTML stands for Hyper Text Markup Language, It helps to learn web development and designing. </p>
-                        <a href="#" class="btn btn-primary">∫∏∑Ø∞°±‚</a>
+                        <h3 class="card-title"><a href="#" class="text-secondary"><%=travels.get(i).getTitle() %></a></h3>
+                        <p class="card-text"><%=travels.get(i).getDescription() %></p>
+                        <a href="./travel.jsp?filename=<%=travels.get(i).getFileName() %>"  class="btn btn-primary" >Î≥¥Îü¨Í∞ÄÍ∏∞</a>
                     </div>
                 </div>
+           
             </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card my-3">
-
-                    <img src="https://images.pexels.com/photos/3848158/pexels-photo-3848158.jpeg" class="card-image-top" alt="thumbnail">
-
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="#" class="text-secondary">Why We Use HTML</a></h3>
-                        <p class="card-text">We use HTML to make website and that website helps to gain very much knowledge.Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida.</p>
-                        <a href="#" class="btn btn-primary">∫∏∑Ø∞°±‚</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card my-3">
-
-                    <img src="https://images.pexels.com/photos/2343170/pexels-photo-2343170.jpeg" class="card-image-top" alt="thumbnail">
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="#" class="text-secondary">Where do people came from?</a></h3>
-                        <p class="card-text">Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida. Nam sapien nisi, malesuada at sapien suscipit,</p>
-                        <a href="#" class="btn btn-primary">∫∏∑Ø∞°±‚</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card my-3">
-                    <img src="https://images.pexels.com/photos/1519088/pexels-photo-1519088.jpeg" class="card-image-top" alt="thumbnail">
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="#" class="text-secondary">What is Lorem Ipsum?</a></h3>
-                        <p class="card-text">Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida. Nam sapien nisi, malesuada at sapien suscipit.</p>
-                       <a href="#" class="btn btn-primary">∫∏∑Ø∞°±‚</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card my-3">
-
-                    <img src="https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg" class="card-image-top" alt="thumbnail">
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="#" class="text-secondary">Where is my Pasta?</a></h3>
-                        <p class="card-text">Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida. Nam sapien nisi, malesuada at sapien suscipit,</p>
-                        <a href="#" class="btn btn-primary">∫∏∑Ø∞°±‚</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card my-3">
-
-                    <img src="https://images.pexels.com/photos/60597/dahlia-red-blossom-bloom-60597.jpeg" class="card-image-top" alt="thumbnail">
-
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="#" class="text-secondary">Why is sky blue ?</a></h3>
-                        <p class="card-text">Pellentesque dictum consequat tincidunt. Sed tincidunt tortor nec vulputate gravida. Nam sapien nisi, malesuada at sapien suscipit.</p>
-                        <a href="#" class="btn btn-primary">∫∏∑Ø∞°±‚</a>
-                    </div>
-                </div>
-            </div>
+            
+            <%} %>
         </div>
     </div>
-</section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><%@ include file="footer.jsp" %></div>

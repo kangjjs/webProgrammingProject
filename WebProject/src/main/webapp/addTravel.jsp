@@ -1,11 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="dto.Travel" %>
 <%@ page import="util.DatabaseUtil" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page errorPage="isErrorPage_error.jsp"%>
+
 <!DOCTYPE html>
 <head>
         <meta charset="utf-8" />
@@ -63,17 +65,13 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     	<%if(userID==null){ %>
                         <%}else{ %>
-                        <li class="nav-item"><a class="nav-link" href="#!"><%=name%>¿« ø©«‡±‚∑œ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./mypage.jsp"><%=name%>Ïùò Ïó¨ÌñâÍ∏∞Î°ù</a></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">ªÛ¡°</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">ÏÉÅÏ†ê</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="allProducts.jsp">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="africa.jsp">Africa</a></li>
-                                <li><a class="dropdown-item" href="america.jsp">America</a></li>
-                                <li><a class="dropdown-item" href="asia.jsp">Asia</a></li>
-                                <li><a class="dropdown-item" href="europe.jsp">Europe</a></li>
-                                <li><a class="dropdown-item" href="oceania.jsp">Oceania</a></li>
+                                <li><a class="dropdown-item" href="./mysouvenir.jsp">ÎÇ¥ Í∏∞ÎÖêÌíà</a></li>
                             </ul>
                         </li>
                         <%} %>
@@ -108,7 +106,7 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">≥™¿« ø©«‡¿ª ±‚∑œ«ÿ¡÷ººø‰</h1>
+                    <h1 class="display-4 fw-bolder">ÎÇòÏùò Ïó¨ÌñâÏùÑ Í∏∞Î°ùÌï¥Ï£ºÏÑ∏Ïöî</h1>
                 </div>
             </div>
         </header>
@@ -116,7 +114,7 @@
          <div class="text-right">
             <a href="?language=ko">Korean</a> | <a href="?language=en">English</a>
          </div>
-      <form name="travels" action="./addTravelProcess.jsp" class="form-horizontal" method="post" >
+      <form name="travels" action="./addTravelProcess.jsp" class="form-horizontal" method="post" enctype="multipart/form-data" >
          <div class="form-group row">
             <label class="col-sm-2"><fmt:message key="title"/></label>
             <div class="col-sm-3">
@@ -151,18 +149,24 @@
          <div class="form-group row">
             <label class="col-sm-2"><fmt:message key="startDate"/></label>
             <div class="col-sm-3">
-               <input type="text" name="startDate" class="form-control">
+               <input type="date" name="startDate" class="form-control">
             </div>
          </div>
          <div class="form-group row">
             <label class="col-sm-2"><fmt:message key="endDate"/></label>
             <div class="col-sm-3">
-               <input type="text" name="endDate" class="form-control">
+               <input type="date" name="endDate" class="form-control">
+            </div>
+         </div>
+         <div class="form-group row">
+            <label class="col-sm-2"><fmt:message key="endDate"/></label>
+            <div class="col-sm-3">
+               <input type="file" name="filename" class="form-control">
             </div>
          </div>
          <div class="form-group row">
             <div class="col-sm-offset-2 col-sm-10">
-               <input type="button" value="¿€º∫«œ±‚" class="btn btn-primary" onclick="PostTravel()">
+               <input type="button" value="ÏûëÏÑ±ÌïòÍ∏∞" class="btn btn-primary" onclick="PostTravel()">
             </div>
          </div>
       </form>
